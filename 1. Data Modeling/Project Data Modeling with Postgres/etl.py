@@ -6,6 +6,17 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """Based on song_data, preprocess and insert data on songs and artists dim tables. 
+
+    Args
+        cur (cursor object): allows executing PostgreSQL commands with Python
+        filepath (str): song metadata file path
+
+    Returns
+        None
+
+    """
+
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -19,6 +30,16 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """Based on log_data, preprocess and insert data on time and users dim tables, and songplays fact tables.
+
+    Args
+        cur (cursor object): allows executing PostgreSQL commands with Python
+        filepath (str): song metadata file path
+
+    Returns
+        None
+
+    """
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -56,11 +77,24 @@ def process_log_file(cur, filepath):
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = (index, str(pd.to_datetime(row.ts, unit='ms')), row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
+        songplay_data = (str(pd.to_datetime(row.ts, unit='ms')), row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
         cur.execute(songplay_table_insert, songplay_data)
 
 
 def process_data(cur, conn, filepath, func):
+    """Based on log_data, preprocess and insert data on time and users dim tables, and songplays fact tables.
+
+    Args
+        cur (cursor psycopg2 object): allows executing PostgreSQL commands with Python
+        conn (connection psycopg2 object): database connection
+        filepath (str): song metadata file path
+        func: etl function (process_song_file or process_log_file)
+
+    Returns
+        None
+
+    """
+
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -80,6 +114,16 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    """Build entire ETL: connect to database, song files ETL, log files ETL
+
+    Args
+        None
+
+    Returns
+        None
+
+    """
+
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=postgres password=student")
     cur = conn.cursor()
 
