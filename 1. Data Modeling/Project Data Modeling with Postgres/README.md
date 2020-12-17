@@ -39,20 +39,20 @@ To test them, open `test.ipynb`.
 
     SELECT * FROM songplays LIMIT 5
 
-![songplays query](images/songplays_query.png)
+![songplays query](images/songplays_query.PNG)
 
     SELECT * FROM users LIMIT 5
 
-![users query](images/users_query.png)
+![users query](images/users_query.PNG)
 
     SELECT * FROM songs LIMIT 5
 
-![songs query](images/songs_query.png)
+![songs query](images/songs_query.PNG)
 
     SELECT * FROM artists LIMIT 5
 
-![artists query](images/artists_query.png)
+![artists query](images/artists_query.PNG)
 
     SELECT * FROM time LIMIT 5
 
-![time query](images/time_query.png)
+![time query](images/time_query.PNG)
