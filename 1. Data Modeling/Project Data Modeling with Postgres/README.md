@@ -56,5 +56,3 @@ To test them, open `test.ipynb`.
     SELECT * FROM time LIMIT 5
 
 ![time query](images/time_query.png)
-
-### 5.2 Some Analytical Queries
